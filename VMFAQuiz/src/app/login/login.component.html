@@ -1,0 +1,23 @@
+<ActionBar title="VMFA">
+    
+    <NavigationButton icon="res://ic_arrow_back_black_24dp" (tap)="goBack()"></NavigationButton>
+    <!-- <ActionItem horizontalAlignment="right" heigh="25" width="25" src="https://ih1.redbubble.net/image.363745166.9410/ap,550x550,12x12,1,transparent,t.u1.png"></ActionItem> -->
+
+</ActionBar>
+
+<StackLayout class="form" height="85%">
+    <Image width="100%"
+        src="https://cdn.shopify.com/s/files/1/0158/9452/files/Peach_Plum_Planting_Guide_grande.jpg?v=1517257186">
+    </Image>
+    <Label class="h2" horizontalAlignment="center" text="Login"></Label>
+    <StackLayout class="input-field">
+
+        <TextField class="input" hint="username"></TextField>
+    </StackLayout >
+
+    <StackLayout class="input-field">
+        <TextField class="input" hint="passwords"></TextField>
+    </StackLayout>
+
+    <Button text="Log In" class="btn btn-primary" [nsRouterLink]="['/home']" pageTransition="slide"></Button>
+</StackLayout>

@@ -10,6 +10,7 @@ export class QuizComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // console.log(this.router.url);
   }
 
 }

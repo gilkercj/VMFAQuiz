@@ -1,0 +1,11 @@
+<StackLayout>
+    <Button text="Back Home" class="btn btn-primary" [nsRouterLink]="['/']"></Button>
+    <Button class="btn btn-danger" text="add topic" (tap)="insert()"></Button>
+
+    <ListView [items]="topics">
+    <ng-template let-topic="item">
+        <Label text=" {{topic.id}} {{topic.topic_name}}  {{topic.quiz_count}}  {{topic.completed}}" [nsRouterLink]="['/quiz', topic.id]"></Label>
+    </ng-template>
+    </ListView>
+
+</StackLayout>

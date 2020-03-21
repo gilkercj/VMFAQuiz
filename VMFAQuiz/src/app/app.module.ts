@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { QuizformComponent } from './quizform/quizform.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { TopicsComponent } from './topics/topics.component';
 
 
 
@@ -24,7 +25,8 @@ import { QuizComponent } from './quiz/quiz.component';
         HomeComponent,
         LoginComponent,
         QuizformComponent,
-        QuizComponent
+        QuizComponent,
+        TopicsComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

@@ -1,0 +1,69 @@
+<ActionBar title="VMFAShop"></ActionBar>
+<StackLayout>
+
+    <Tabs selectedIndex="1">
+
+        <!-- The bottom tab UI is created via TabStrip (the containier) and TabStripItem (for each tab)-->
+        <TabStrip>
+            <TabStripItem (tap)="topicsFetch()">
+                <Label text="Topics"></Label>
+                <!-- <Image src="font://&#xf015;" class="fas"></Image> -->
+            </TabStripItem>
+            <TabStripItem class="special">
+                <Label text="Users"></Label>
+                <!-- <Image src="font://&#xf007;" class="fas"></Image> -->
+            </TabStripItem>
+            <TabStripItem class="Questions">
+                <Label text="Search"></Label>
+                <!-- <Image src="font://&#xf00e;" class="fas"></Image> -->
+            </TabStripItem>
+            
+        </TabStrip>
+
+        <!-- The number of TabContentItem components should corespond to the number of TabStripItem components -->
+        <TabContentItem>
+            <StackLayout>
+                <Button class="btn btn-primary" text="New Quiz" (tap)="showQuizModal()"></Button>
+                
+                <ListView [items]="topics">
+                    <ng-template let-topic="item">
+                        <Label class="h3" horizontalAlignment="center" margin="20 0"
+                            text=" {{topic.id}} || {{topic.topic_name}} || {{topic.quiz_count}} || {{topic.completed}}"
+                            [nsRouterLink]="['/quiz', topic.id]"></Label>
+                    </ng-template>
+                </ListView>
+
+            </StackLayout>
+        </TabContentItem>
+        <TabContentItem>
+
+            <StackLayout height="100%">
+                <ListView [items]="users">
+                    <ng-template let-user="item">
+                        <Label margin="20 0" horizontalAlignment="center" class="h2"
+                            text="User: {{user.username}}  ||  Password: {{user.password}}"></Label>
+                    </ng-template>
+                </ListView>
+            </StackLayout>
+        </TabContentItem>
+        <TabContentItem>
+            <GridLayout>
+                <Label text="Search Page" class="h2 text-center"></Label>
+            </GridLayout>
+        </TabContentItem>
+
+
+    </Tabs>
+
+
+
+    <StackLayout>
+        <ListView [items]="users">
+            <ng-template let-user="item">
+                <Label margin="20 0" horizontalAlignment="center" class="h3"
+                    text="User: {{user.username}}  ||  Password: {{user.password}}"></Label>
+            </ng-template>
+        </ListView>
+
+    </StackLayout>
+</StackLayout>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 var Sqlite = require("nativescript-sqlite");
+const AS = require("tns-core-modules/application-settings");
 
 @Component({
     selector: "Home",
@@ -7,11 +8,17 @@ var Sqlite = require("nativescript-sqlite");
 })
 export class HomeComponent implements OnInit {
 
+    
+
     private database: any;
     public users: Array<any>;
+    public currentUser: string = AS.getString("username");
+    public input: any;
 
     public constructor() {
+
         this.users = [];
+
         (new Sqlite("quiz.db")).then(db => {
             db.execSQL("CREATE TABLE IF NOT EXISTS users ( id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT , password TEXT, score INTEGER );")
                 .then(id => {
@@ -25,25 +32,9 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    public make() {
-
-        this.database.execSQL("CREATE TABLE IF NOT EXISTS users ( id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT , password TEXT, score INTEGER );")
-            .then(id => {
-                this.fetch();
-            }, error => {
-                console.log("table create error", error);
-            });
-    }
-
-    // INSERT INTO users (username, password, score) VALUES (?,?, ?); "gilkercj", "chickydoo", 69      INSERT INTO users (username, password, score) VALUES (?, ?, ?);", ["gilkercj", "chickydoo", 69]
-    public insert() {
-        this.database.execSQL("INSERT INTO users (username, password, score) VALUES (?, ?, ?);", ["gilkercj", "chickydoo", 69]).then(id => {
-
-            this.fetch();
-            console.log("user Inserted!");
-        }, error => {
-            console.log("Insert error: ", error);
-        });
+    public userTest() {
+        const curUser: string = AS.getString("username");
+        console.log("HOMEPAGE USER TEST: " + curUser);
     }
 
     public fetch() {
@@ -57,15 +48,26 @@ export class HomeComponent implements OnInit {
                     "score": rows[row][3],
                 })
             }
-            console.log(this.users);
+            // console.log(this.users);
         }, error => {
             console.log("FETCH ERROR: ", error);
 
         });
     }
 
+    public make() {
+
+        this.database.execSQL("CREATE TABLE IF NOT EXISTS users ( id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT , password TEXT, score INTEGER );")
+            .then(id => {
+                this.fetch();
+            }, error => {
+                console.log("table create error", error);
+            });
+    }
+
     public reset() {
-        this.database.execSQL("DROP TABLE users;").then(id => {
+        let data = "users"
+        this.database.execSQL(`DROP TABLE ${data};`).then(id => {
 
             console.log("table dropped!");
             this.fetch();
@@ -76,7 +78,8 @@ export class HomeComponent implements OnInit {
 
         this.make()
     }
-
+    
+   
     ngOnInit(): void {
         // Init your component properties here.
     }

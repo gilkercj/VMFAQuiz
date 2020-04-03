@@ -8,7 +8,13 @@ import { LoginComponent } from './login/login.component';
 import { QuizformComponent } from './quizform/quizform.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { TopicsComponent } from './topics/topics.component';
-
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { QuestionsComponent } from './questions/questions.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { AnswerFormComponent } from './answer-form/answer-form.component';
+import { QuizModalComponent } from './quiz-modal/quiz-modal.component';
+import { ModalDialogService } from "nativescript-angular/modal-dialog";
+import { QuestionModalComponent } from './question-modal/question-modal.component';
 
 
 @NgModule({
@@ -19,6 +25,7 @@ import { TopicsComponent } from './topics/topics.component';
     imports: [
         NativeScriptModule,
         AppRoutingModule,
+        NativeScriptFormsModule,
     ],
     declarations: [
         AppComponent,
@@ -26,10 +33,25 @@ import { TopicsComponent } from './topics/topics.component';
         LoginComponent,
         QuizformComponent,
         QuizComponent,
-        TopicsComponent
+        TopicsComponent,
+        QuestionsComponent,
+        AdminPageComponent,
+        AnswerFormComponent,
+        QuizModalComponent,
+        QuestionModalComponent,
+        
     ],
+    providers: [ModalDialogService],
     schemas: [
         NO_ERRORS_SCHEMA
-    ]
+    ],
+    entryComponents: [
+        QuizModalComponent,
+        QuestionModalComponent
+    ],
+    exports: [
+        QuizModalComponent,
+        QuestionModalComponent
+    ],
 })
 export class AppModule { }

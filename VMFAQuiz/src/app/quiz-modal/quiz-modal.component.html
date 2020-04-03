@@ -1,0 +1,21 @@
+<StackLayout margin="70 0" width="500" class="form">
+
+    <Label class="h1" height="75" horizontalAlignment="center" text="New Quiz"></Label>
+
+    <StackLayout height="75" class="input-field">
+
+      <TextField  hint="Name" class="input"></TextField>
+
+    </StackLayout>
+  
+    <StackLayout height="75" class="input-field">
+
+      <TextField hint="Description" class="input"></TextField>
+
+    </StackLayout>
+
+    <Button margin="25 0" (tap)="showQuestionModal()" text="Add Question" width="150" class="btn btn-primary"></Button>
+  
+    <Button margin="25 0" text="Submit" width="250" class="btn btn-primary"></Button>
+
+  </StackLayout>

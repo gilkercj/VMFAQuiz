@@ -1,11 +1,15 @@
+<ActionBar title="VMFAShop"></ActionBar>
+
 <StackLayout>
     <Button text="Back Home" class="btn btn-primary" [nsRouterLink]="['/']"></Button>
     <Button class="btn btn-danger" text="add topic" (tap)="insert()"></Button>
 
+    <Button class="btn rounded" backgroundColor="red"width="33%" text="Reset Topic DB" (tap)="reset()"></Button>
     <ListView [items]="topics">
     <ng-template let-topic="item">
-        <Label text=" {{topic.id}} {{topic.topic_name}}  {{topic.quiz_count}}  {{topic.completed}}" [nsRouterLink]="['/quiz', topic.id]"></Label>
+        <Label class="h3" horizontalAlignment="center" margin="20 0" text=" {{topic.id}} || {{topic.topic_name}} || {{topic.quiz_count}} || {{topic.completed}}" [nsRouterLink]="['/quiz', topic.id]"></Label>
     </ng-template>
     </ListView>
+
 
 </StackLayout>

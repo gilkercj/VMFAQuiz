@@ -1,9 +1,5 @@
-<ActionBar title="VMFA">
-    
-    <NavigationButton icon="res://ic_arrow_back_black_24dp" (tap)="goBack()"></NavigationButton>
-    <!-- <ActionItem horizontalAlignment="right" heigh="25" width="25" src="https://ih1.redbubble.net/image.363745166.9410/ap,550x550,12x12,1,transparent,t.u1.png"></ActionItem> -->
+<ActionBar title="VMFAShop"></ActionBar>
 
-</ActionBar>
 
 <StackLayout class="form" height="85%">
     <Image width="100%"
@@ -12,12 +8,22 @@
     <Label class="h2" horizontalAlignment="center" text="Login"></Label>
     <StackLayout class="input-field">
 
-        <TextField class="input" hint="username"></TextField>
+        <TextField class="input" id="username-input" hint="username" [(ngModel)]="input.user"></TextField>
+        <Label text="{{input.user}}"></Label>
     </StackLayout >
 
     <StackLayout class="input-field">
-        <TextField class="input" hint="passwords"></TextField>
+        <TextField class="input" hint="passwords" [(ngModel)]="input.password" ></TextField>
     </StackLayout>
 
-    <Button text="Log In" class="btn btn-primary" [nsRouterLink]="['/home']" pageTransition="slide"></Button>
+    <Button text="Log In" class="btn btn-primary" (tap)="userLogin()" [nsRouterLink]="['/home']" pageTransition="slide"></Button>
+    <Label horizontalAlignment="center" color="Gray" class="h7" text="Not a User?"></Label>
+    <Button text="Register" class="btn btn-primary" (tap)="insert()" [nsRouterLink]="['/home']" pageTransition="slide"></Button>
+
+
+    <!-- <ListView [items]="users">
+        <ng-template let-user="item">
+            <Label text=" {{user.username}}"></Label>
+        </ng-template>
+        </ListView> -->
 </StackLayout>

@@ -1,22 +1,20 @@
-<ActionBar>
-    <Label class="h2" text="Home"></Label>
-    <!-- <StackLayout class="bg-primary">
-        <Label text="I want to draw your attention here."></Label>
-    </StackLayout> -->
-
-</ActionBar>
-
+<ActionBar title="VMFAShop"></ActionBar>
 <StackLayout>
+
     <Label text="Home Page Brah!"></Label>
-    <Button class="btn btn-primary" text="GO!" [nsRouterLink]="['/login']" pageTransition="slide"></Button>
-    <Button class="btn btn-primary" text="Quiz" [nsRouterLink]="['/quiz']" pageTransition="slide"></Button>
-    <Button class="btn btn-primary" text="Topics" [nsRouterLink]="['/topics']" pageTransition="slide"></Button>
-    <Button class="btn btn-danger" text="add user" (tap)="insert()"></Button>
-    <Button class="btn" backgroundColor="red" text="RESET" (tap)="reset()"></Button>
+    <Label text="Welcome {{currentUser}}!" ></Label>
+    
+    <Button class="btn btn-primary rounded" width="20%" text="Login" [nsRouterLink]="['/login']" pageTransition="slide"></Button>
+    <!-- <Button class="btn btn-primary" text="Quiz" [nsRouterLink]="['/quiz']" pageTransition="slide"></Button> -->
+    <Button class="btn btn-primary rounded" width="20%" text="Topics" [nsRouterLink]="['/topics']" pageTransition="slide"></Button>
+    <Button class="btn btn-primary rounded" width="20%" text="Admin" [nsRouterLink]="['/adminPage']" pageTransition="slide"></Button>
+    <!-- <Button class="btn btn-danger" text="add user" (tap)="insert()"></Button> -->
+    <Button class="btn rounded" backgroundColor="darkRed"width="33%" text="Reset User DB" (tap)="reset()"></Button>
+    <Button class="btn btn-primary rounded" width="20%" text="usertest"  (tap)="userTest()"></Button>
 
     <ListView [items]="users">
         <ng-template let-user="item">
-            <Label text="{{user.username}} {{user.password}} {{user.score}} WOW"></Label>
+            <Label margin="20 0" horizontalAlignment="center" class="h3" text="User: {{user.username}}  ||  Password: {{user.password}}"></Label>
         </ng-template>
     </ListView>
 

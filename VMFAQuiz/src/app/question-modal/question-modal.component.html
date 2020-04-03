@@ -1,0 +1,46 @@
+<StackLayout horizontalAlignment="center" margin="70 0" width="1000" class="form">
+
+    <StackLayout ngfor="let form of qCount" >
+
+        <Label class="h1" height="75" horizontalAlignment="center" text="Questions (the babies wont see this)"></Label>
+        <Label [text]="form"></Label>
+        <FlexboxLayout horizontalAlignment="center" height="50" class="input-field">
+            <TextField [(ngModel)]="input.question" width="700" hint="Question" class="input"></TextField>
+        </FlexboxLayout>
+
+        <FlexboxLayout horizontalAlignment="center"  height="50" class="input-field">
+            <Switch [(ngModel)]="input.switch1" margin="0 20" checked="false"></Switch>
+            <TextField  [(ngModel)]="input.answer1" width="550" hint="Description" class="input"></TextField>
+        </FlexboxLayout>
+
+        <FlexboxLayout horizontalAlignment="center" height="50" class="input-field">
+            <Switch [(ngModel)]="input.switch2" margin="0 20" checked="false"></Switch>
+            <TextField [(ngModel)]="input.answer2" width="550" hint="Description" class="input"></TextField>
+        </FlexboxLayout>
+
+        <FlexboxLayout horizontalAlignment="center" height="50" class="input-field">
+            <Switch [(ngModel)]="input.switch3" margin="0 20" checked="false"></Switch>
+            <TextField [(ngModel)]="input.answer3" width="550" hint="Description" class="input"></TextField>
+        </FlexboxLayout>
+   
+        <FlexboxLayout horizontalAlignment="center" height="50" class="input-field">
+            <Switch [(ngModel)]="input.switch4" margin="0 20" checked="false"></Switch>
+            <TextField [(ngModel)]="input.answer4" width="550" hint="Description" class="input"></TextField>
+        </FlexboxLayout>
+
+        <Button margin="25 0" (tap)="insert()" text="+" width="50" class="btn btn-primary"></Button>
+
+        <Button margin="25 0" (tap)="reset()" text="reset" width="150" class="btn btn-primary"></Button>
+
+        <Button margin="25 0" text="Submit" width="250" class="btn btn-primary"></Button>
+    
+    </StackLayout>
+
+    <ListView [items]="questions">
+        <ng-template let-question="item" let-i="index">
+            <Label text="Question {{1}} {{question.question}}"></Label>
+        </ng-template>
+        </ListView>
+
+
+</StackLayout>

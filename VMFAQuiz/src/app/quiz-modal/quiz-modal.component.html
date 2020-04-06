@@ -4,18 +4,18 @@
 
     <StackLayout height="75" class="input-field">
 
-      <TextField  hint="Name" class="input"></TextField>
+      <TextField [(ngModel)]="input.name" hint="Name" class="input"></TextField>
 
     </StackLayout>
   
     <StackLayout height="75" class="input-field">
 
-      <TextField hint="Description" class="input"></TextField>
+      <TextField [(ngModel)]="input.decription" hint="Description" class="input"></TextField>
 
     </StackLayout>
 
-    <Button margin="25 0" (tap)="showQuestionModal()" text="Add Question" width="150" class="btn btn-primary"></Button>
-  
-    <Button margin="25 0" text="Submit" width="250" class="btn btn-primary"></Button>
+    <Button margin="10 0" (tap)="showQuestionModal()" text="Add Question" width="150" class="btn btn-primary"></Button>
+    <Button margin="10 0" (tap)="reset()" text="reset" width="150" class="btn btn-primary"></Button>
+    <Button margin="10 0" text="Submit" width="250" class="btn btn-primary"(tap)="insert()" ></Button>
 
   </StackLayout>

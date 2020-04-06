@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ModalDialogService } from "nativescript-angular/directives/dialogs";
+import { ModalDialogParams } from "nativescript-angular/directives/dialogs";
+
 
 var Sqlite = require("nativescript-sqlite");
 const AS = require("tns-core-modules/application-settings");
@@ -17,9 +19,10 @@ export class QuestionModalComponent implements OnInit {
   public input: any;
   private database: any;
 
-  constructor(private modal: ModalDialogService, private vcRef: ViewContainerRef) {
+  constructor(private modalDialogParams: ModalDialogParams, private modal: ModalDialogService, private vcRef: ViewContainerRef) {
     this.qCount = [];
     this.questions = [];
+
 
     this.input = {
       "question": "",
@@ -33,86 +36,122 @@ export class QuestionModalComponent implements OnInit {
       "switch4": false,
     };
 
+
     (new Sqlite("quiz.db")).then(db => {
       db.execSQL("PRAGMA foreign_keys = ON;")
-      .then(id => {
+        .then(id => {
           console.log("FK ON")!
-      });
-        db.execSQL("CREATE TABLE IF NOT EXISTS questions ( id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer1 TEXT, answer2 TEXT, answer3 TEXT, answer4 TEXT);")
-            .then(id => {
-                this.database = db;
-                this.fetch();
-                console.log("QUESTIONS TABLE ON")
-            }, error => {
-                console.log("TABLE CREATE ERROR: ", error);
-            });
+        });
+      db.execSQL("CREATE TABLE IF NOT EXISTS questions ( id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer1 TEXT, answer2 TEXT, answer3 TEXT, answer4 TEXT, correctAnswer INTEGER);")
+        .then(id => {
+          this.database = db;
+          this.fetch();
+          console.log("QUESTIONS TABLE ON")
+        }, error => {
+          console.log("TABLE CREATE ERROR: ", error);
+        });
     }, error => {
-        console.log("DB Error: ", error);
+      console.log("DB Error: ", error);
     });
   }
 
-  
+
 
 
 
   ngOnInit(): void {
   }
 
+  public dataClear() {
+    this.input = {
+      "question": "",
+      "answer1": "",
+      "answer2": "",
+      "answer3": "",
+      "answer4": "",
+      "switch1": false,
+      "switch2": false,
+      "switch3": false,
+      "switch4": false,
+    }
+  }
 
-  public insert() {
-    console.log("INSERT START")
-    this.database.execSQL("INSERT INTO questions (question, answer1, answer2, answer3, answer4) VALUES (?, ?, ?, ?, ?);", [this.input.question, this.input.answer1, this.input.answer2, this.input.answer3, this.input.answer4]).then(id => {
-  
-        this.fetch();
-        console.log("question Inserted!");
+  public insertVerify() {
+    let correctAnswer = 0;
+    if (this.input.switch1 === true) {
+      correctAnswer = 1;
+      this.insert(correctAnswer);
+    } else if (this.input.switch2 === true) {
+      correctAnswer = 2;
+      this.insert(correctAnswer);
+    } else if (this.input.switch3 === true) {
+      correctAnswer = 3;
+      this.insert(correctAnswer);
+    } else if (this.input.switch4 === true) {
+      correctAnswer = 4;
+      this.insert(correctAnswer);
+
+    }
+  }
+
+
+  public insert(correctAnswer) {
+    let correct = correctAnswer
+    console.log(correct);
+    this.database.execSQL("INSERT INTO questions (question, answer1, answer2, answer3, answer4, correctAnswer) VALUES (?, ?, ?, ?, ?, ?);", [this.input.question, this.input.answer1, this.input.answer2, this.input.answer3, this.input.answer4, correct]).then(id => {
+      console.log("POST INSERT")
+      this.fetch();
+      console.log("question Inserted!");
     }, error => {
-        console.log("INSERT ERROR: ", error);
-        console.log( this.questions)
+      console.log("INSERT ERROR: ", error);
+
     });
+    this.dataClear();
   }
 
   public fetch() {
     this.database.all("SELECT * FROM questions").then(rows => {
-        this.questions = [];
-        for (let row in rows) {
-            this.questions.push({
-                "id": rows[row][0],
-                "question": rows[row][1],
-                "answer1": rows[row][2],
-                "answer2": rows[row][3],
-                "answer3": rows[row][4],
-                "answer4": rows[row][5],
-            })
-        }
-        console.log(this.questions);
+      this.questions = [];
+      for (let row in rows) {
+        this.questions.push({
+          "id": rows[row][0],
+          "question": rows[row][1],
+          "answer1": rows[row][2],
+          "answer2": rows[row][3],
+          "answer3": rows[row][4],
+          "answer4": rows[row][5],
+          "correctAnswer": rows[row][6]
+        })
+      }
+      console.log(this.questions);
     }, error => {
-        console.log("FETCH ERROR: ", error);
-  
+      console.log("FETCH ERROR: ", error);
+
     });
   }
 
 
   public make() {
 
-    this.database.execSQL("CREATE TABLE IF NOT EXISTS questions ( id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer1 TEXT, answer2 TEXT, answer3 TEXT, answer4 TEXT);")
-        .then(id => {
-            this.fetch();
-            console.log("remade and fetched!")
-        }, error => {
-            console.log("RECREATE ERROR: ", error);
-        });
+    this.database.execSQL("CREATE TABLE IF NOT EXISTS questions ( id INTEGER PRIMARY KEY AUTOINCREMENT, question TEXT, answer1 TEXT, answer2 TEXT, answer3 TEXT, answer4 TEXT, correctAnswer INTEGER);")
+      .then(id => {
+        this.fetch();
+        console.log("remade and fetched!")
+      }, error => {
+        console.log("RECREATE ERROR: ", error);
+      });
   }
 
   public reset() {
     this.database.execSQL("DROP TABLE questions;").then(id => {
-  
-        console.log("table dropped!");
-        this.fetch();
+
+      console.log("table dropped!");
+      this.fetch();
     }, error => {
-        console.log("DROP ERROR: ", error);
-  
+      console.log("DROP ERROR: ", error);
+
     })
-  
+
     this.make()
   }
 
@@ -122,11 +161,11 @@ export class QuestionModalComponent implements OnInit {
 
   public saveQuestion() {
 
-      AS.setString("question", this.input.question);
-      AS.setString("answer1", this.input.answer1);
-      AS.setString("answer2", this.input.answer2);
-      AS.setString("answer3", this.input.answer3);
-      AS.setString("answer4", this.input.answer4);
+    AS.setString("question", this.input.question);
+    AS.setString("answer1", this.input.answer1);
+    AS.setString("answer2", this.input.answer2);
+    AS.setString("answer3", this.input.answer3);
+    AS.setString("answer4", this.input.answer4);
 
 
     this.addQuestion()
@@ -144,6 +183,10 @@ export class QuestionModalComponent implements OnInit {
       });
 
     // console.log(this.questions)
+  }
+
+  onCloseButtonTap() {
+    this.modalDialogParams.closeCallback();
   }
 
 }

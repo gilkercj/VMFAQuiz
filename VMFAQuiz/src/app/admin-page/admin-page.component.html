@@ -28,7 +28,7 @@
                 <ListView [items]="topics">
                     <ng-template let-topic="item">
                         <Label class="h3" horizontalAlignment="center" margin="20 0"
-                            text=" {{topic.id}} || {{topic.topic_name}} || {{topic.quiz_count}} || {{topic.completed}}"
+                            text=" {{topic.id}} || {{topic.quiz_name}} || {{topic.quiz_desc}}"
                             [nsRouterLink]="['/quiz', topic.id]"></Label>
                     </ng-template>
                 </ListView>

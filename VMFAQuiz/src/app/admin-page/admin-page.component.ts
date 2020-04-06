@@ -73,14 +73,14 @@ export class AdminPageComponent implements OnInit {
 }
 public topicsFetch() {
     this.topics = [];
-    this.database.all("SELECT * FROM topics").then(rows => {
+    this.database.all("SELECT * FROM quiz").then(rows => {
         this.topics = [];
         for (let row in rows) {
             this.topics.push({
                 "id": rows[row][0],
-                "topic_name": rows[row][1],
-                "quiz_count": rows[row][2],
-                "completed": rows[row][3],
+                "quiz_name": rows[row][1],
+                "quiz_desc": rows[row][2],
+
             })
         }
         console.log(this.topics);
